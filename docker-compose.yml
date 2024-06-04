@@ -22,7 +22,7 @@ services:
     command:
       - --storageEngine=wiredTiger
     volumes:
-      - data:/data/db
+      - ./data:/data/db
     logging:
       driver: none
 
