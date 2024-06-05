@@ -5,7 +5,6 @@ import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { buildConfig } from "payload/config";
 import cloudinaryPlugin from "payload-cloudinary-plugin/dist/plugins";
-
 import {
   Users,
   Basics,
@@ -20,11 +19,22 @@ import {
   Volunteers,
   Works,
 } from "./collections";
+import { getUserByNickName, validateJWT } from "./services";
 
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
+    webpack: (config) => ({
+      ...config,
+      resolve: {
+        ...config.resolve,
+        fallback: {
+          ...config.resolve.fallback,
+          stream: require.resolve("stream-browserify")
+        }
+      }    
+    }),
   },
   editor: slateEditor({}),
   collections: [
@@ -40,6 +50,13 @@ export default buildConfig({
     Awards,
     Interests,
     Media,
+  ],
+  endpoints: [
+    {
+      path: "/:nickName",
+      method: "get",
+      handler: [validateJWT, getUserByNickName],
+    },
   ],
   localization: {
     locales: [
