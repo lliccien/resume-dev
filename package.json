@@ -26,8 +26,6 @@
     "jsonwebtoken": "^9.0.2",
     "payload": "^2.0.0",
     "payload-cloudinary-plugin": "^0.1.8",
-    "steam": "^1.4.1",
-    "stream-browserify": "^3.0.0",
     "util": "^0.12.5"
   },
   "devDependencies": {
