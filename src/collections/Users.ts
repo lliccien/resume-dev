@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types'
-import { isAdminOrUserById } from '../access'
+import { isAdmin, isAdminOrCreatedBy, isAdminOrUserById } from '../access'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -26,9 +26,9 @@ export const Users: CollectionConfig = {
   },
   access: {
     read: isAdminOrUserById,
-    create: isAdminOrUserById,
+    create: isAdmin,
     update: isAdminOrUserById,
-    delete: isAdminOrUserById
+    delete: isAdmin
   },
   fields: [
     {
@@ -54,6 +54,11 @@ export const Users: CollectionConfig = {
       ],
       required: true,
       defaultValue: "user",
+      access: {
+        read: () => true,
+        create: isAdmin,
+        update: isAdmin,
+      },
     },
   ],
 }
